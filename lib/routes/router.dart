@@ -1,6 +1,7 @@
 import 'package:fakestorefake/screens/authentication/login/login.dart';
 import 'package:fakestorefake/screens/authentication/signUp/sign_up.dart';
 import 'package:fakestorefake/screens/home/home.dart';
+import 'package:fakestorefake/screens/home/list/list.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,32 +12,45 @@ final router = GoRouter(
   routes: [
     GoRoute(path: Routes.login, builder: (context, state) => LoginPage()),
     GoRoute(path: Routes.signUp, builder: (context, state) => SignUpPage()),
-    ShellRoute(
-      builder: (context, state, child) {
-        return HomePage();
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return HomePage(navigationShell);
       },
-      routes: [
-        GoRoute(
-          path: Routes.home,
-          builder: (context, state) => HomePage(),
+      branches: [
+        StatefulShellBranch(
           routes: [
             GoRoute(
-              path: Routes.first,
-              builder: (context, state) => Center(child: Text("first")),
-            ),
-            GoRoute(
-              path: Routes.second,
-              builder: (context, state) => Center(child: Text("second")),
+              path: Routes.list,
+              name: Routes.list,
+              builder: (context, state) => ListPage(),
+              routes: [
+                GoRoute(
+                  path: Routes.first,
+                  builder: (context, state) => Center(child: Text("first")),
+                ),
+                GoRoute(
+                  path: Routes.second,
+                  builder: (context, state) => Center(child: Text("second")),
+                ),
+              ],
             ),
           ],
         ),
-        GoRoute(
-          path: '/appointments',
-          // builder: (context, state) => AppointmentsPage(),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.appointments,
+              builder: (context, state) => Center(child: Text("Appointmens")),
+            ),
+          ],
         ),
-        GoRoute(
-          path: '/profile',
-          // builder: (context, state) => ProfilePage(),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.profile,
+              builder: (context, state) => Center(child: Text("profile")),
+            ),
+          ],
         ),
       ],
     ),
