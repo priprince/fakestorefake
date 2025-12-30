@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:fakestorefake/constants/export_page.dart';
 import 'package:fakestorefake/screens/authentication/login/bloc/login_bloc.dart';
 import 'package:fakestorefake/screens/authentication/login/login.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ void main() {
     await test.pumpWidget(createWidgetUnderTest(bloc));
     await test.enterText(find.byType(TextFormField).at(0), 'test@gmail.com');
     await test.enterText(find.byType(TextFormField).at(1), '12');
-    await test.tap(find.text("Login"));
+    await test.tap(find.text(MyString.login));
     await test.pump();
     // verify(() => bloc.add(any(that: isA<LoginButtonEvent>()))).called(1);
     verify(() => bloc.add(LoginButtonEvent("email", "12"))).called(1);

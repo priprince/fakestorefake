@@ -3,6 +3,7 @@ import 'package:fakestorefake/screens/authentication/signUp/bloc/sign_up_bloc.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart'
     show BlocBuilder, BlocListener, BlocProvider;
+import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -17,6 +18,7 @@ class SignUpScreen extends StatelessWidget {
           }
           if (state is SignUpSuccessState) {
             CommonWidgets.showToast("Login Success");
+            context.go(Routes.home);
           }
         },
         child: BlocBuilder<SignUpBloc, SignUpState>(
@@ -96,7 +98,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               );
             },
-            child: Text("Login"),
+            child: Text(MyString.signUp),
           ),
         ],
       ),
