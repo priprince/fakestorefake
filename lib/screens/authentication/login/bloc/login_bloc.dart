@@ -1,13 +1,18 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:fakestorefake/repository/loginRepository/login_repo.dart';
+import 'package:fakestorefake/repository/loginRepository/login_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../constants/export_page.dart' show logger;
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitialState()) {
+  final LoginInterface _loginRepo;
+  LoginBloc(this._loginRepo) : super(LoginInitialState()) {
     on<LoginButtonEvent>(loginButtonEventMethod);
     on<LoginErrorEvent>(loginErrorEventMethod);
     on<LoginSuccessEvent>(loginSuccessEventMethod);
@@ -31,8 +36,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       return;
     }
     emit(LoginLoadingState());
-    await Future.delayed(const Duration(milliseconds: 800));
-    emit(LoginSuccessState());
+    final response = await _loginRepo.login(email, password);
+    logger.i(response);
+    if (response.isSuccess) {
+      logger.f(response.message);
+      emit(LoginSuccessState());
+      return;
+    }
+    emit(LoginErrorState(response.message ?? ""));
   }
 
   FutureOr<void> loginLoadingEventMethod(
