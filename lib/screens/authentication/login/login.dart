@@ -1,9 +1,6 @@
 import 'package:fakestorefake/constants/export_page.dart';
 import 'package:fakestorefake/dependency/get_it.dart';
-import 'package:fakestorefake/dependency/login_dependency.dart';
-import 'package:fakestorefake/graphql/dio_service.dart';
 import 'package:fakestorefake/repository/loginRepository/login_repo.dart';
-import 'package:fakestorefake/repository/loginRepository/login_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +20,7 @@ class LoginScreen extends StatelessWidget {
           }
           if (state is LoginSuccessState) {
             CommonWidgets.showToast("Login Success");
-            context.goNamed(Routes.list);
+            context.goNamed(Routes.products);
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(

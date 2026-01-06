@@ -1,5 +1,7 @@
 // import 'package:graphql_flutter/graphql_flutter.dart' show OperationException;
 
+import 'package:graphql_flutter/graphql_flutter.dart';
+
 abstract class DataState<T> {
   final T? data;
   final T? error;
@@ -17,9 +19,14 @@ class DataError<T> extends DataState<T> {
 class Result<T> {
   final T? data;
   final String? message;
+  final dynamic error;
 
-  const Result.success(this.data, {this.message});
-  const Result.failure(this.message) : data = null;
+  const Result.success(this.data, {this.message}) : error = null;
+  Result.failure(this.error)
+    : data = null,
+      message = error is OperationException
+          ? error.graphqlErrors.first.message
+          : error.toString();
 
   bool get isSuccess => data != null;
 }

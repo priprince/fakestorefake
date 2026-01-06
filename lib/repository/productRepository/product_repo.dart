@@ -1,20 +1,42 @@
+import 'package:fakestorefake/constants/logs.dart' show logger;
 import 'package:fakestorefake/graphql/dio_service.dart';
 import 'package:fakestorefake/graphql/graphql_queries.dart';
+import 'package:fakestorefake/model/product_model.dart'
+    show Product, ProductModel;
 import 'package:fakestorefake/repository/data_state.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 abstract class ProductInterface {
-  Future<DataState> fetchAllProducts();
+  Future<Result<List<Product>>> fetchAllProducts();
 }
 
 class ProductRepo implements ProductInterface {
   ProductRepo(this._graphqlDioService);
   final GraphqlDioService _graphqlDioService;
   @override
-  Future<DataState> fetchAllProducts() async {
-    final response = await _graphqlDioService.execute(() {
-      return _graphqlDioService.query(GraphqlQueries.getAllProducts());
-    });
-    return response;
+  Future<Result<List<Product>>> fetchAllProducts() async {
+    try {
+      final response = await _graphqlDioService.execute(() {
+        return _graphqlDioService.query(GraphqlQueries.getAllProducts());
+      });
+      switch (response) {
+        case DataSuccess():
+          final data = (response.data as Map<String, dynamic>);
+          // logger.i(data);
+          // final productModel = ProductModel.fromJson(data);
+          final products = data['data']['products'] as List;
+          return Result.success(
+            products.map((product) => Product.fromJson(product)).toList(),
+          );
+        case DataError():
+        default:
+          return Result.failure(response.error);
+      }
+    } on OperationException catch (f) {
+      return Result.failure(f);
+    } catch (e) {
+      return Result.failure(e);
+    }
   }
   // Future<DataState> fetchAllProducts() async {
   //   try {

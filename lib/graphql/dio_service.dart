@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' show Dio, Response, DioException;
+import 'package:fakestorefake/constants/logs.dart' show logger;
 import 'package:fakestorefake/dependency/get_it.dart' show url;
 import 'package:graphql_flutter/graphql_flutter.dart'
     show OperationException, GraphQLError;
@@ -15,6 +16,7 @@ class GraphqlDioService {
     try {
       final response = await call();
       final data = response.data;
+      // logger.e(data);
 
       if (response.statusCode == 200 && data?['errors'] == null) {
         return DataSuccess(data);

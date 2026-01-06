@@ -39,7 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final response = await _loginRepo.login(email, password);
     logger.i(response);
     if (response.isSuccess) {
-      logger.f(response.message);
+      logger.d(response.message);
       emit(LoginSuccessState());
       return;
     }

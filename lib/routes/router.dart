@@ -1,7 +1,7 @@
 import 'package:fakestorefake/screens/authentication/login/login.dart';
 import 'package:fakestorefake/screens/authentication/signUp/sign_up.dart';
 import 'package:fakestorefake/screens/home/home.dart';
-import 'package:fakestorefake/screens/home/list/list.dart';
+import 'package:fakestorefake/screens/home/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,9 +20,9 @@ final router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: Routes.list,
-              name: Routes.list,
-              builder: (context, state) => ListPage(),
+              path: Routes.products,
+              name: Routes.products,
+              builder: (context, state) => ProductPage(),
               routes: [
                 GoRoute(
                   path: Routes.first,

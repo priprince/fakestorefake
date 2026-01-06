@@ -4,39 +4,39 @@ import 'package:hive/hive.dart';
 
 part 'product_model.g.dart';
 
-// @HiveType(typeId: HiveTypes.productModel)
-// class ProductModel {
-//   @HiveField(0)
-//   ProductData? data;
+@HiveType(typeId: HiveTypes.productModel)
+class ProductModel {
+  @HiveField(0)
+  ProductData? data;
 
-//   ProductModel({this.data});
+  ProductModel({this.data});
 
-//   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-//     data: json["data"] == null ? null : ProductData.fromJson(json["data"]),
-//   );
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+    data: json["data"] == null ? null : ProductData.fromJson(json["data"]),
+  );
 
-//   Map<String, dynamic> toJson() => {"data": data?.toJson()};
-// }
+  Map<String, dynamic> toJson() => {"data": data?.toJson()};
+}
 
-// @HiveType(typeId: HiveTypes.productData)
-// class ProductData {
-//   @HiveField(0)
-//   List<Product>? products;
+@HiveType(typeId: HiveTypes.productData)
+class ProductData {
+  @HiveField(0)
+  List<Product>? products;
 
-//   ProductData({this.products});
+  ProductData({this.products});
 
-//   factory ProductData.fromJson(Map<String, dynamic> json) => ProductData(
-//     products: json["products"] == null
-//         ? []
-//         : List<Product>.from(json["products"]!.map((x) => Product.fromJson(x))),
-//   );
+  factory ProductData.fromJson(Map<String, dynamic> json) => ProductData(
+    products: json["products"] == null
+        ? []
+        : List<Product>.from(json["products"]!.map((x) => Product.fromJson(x))),
+  );
 
-//   Map<String, dynamic> toJson() => {
-//     "products": products == null
-//         ? []
-//         : List<dynamic>.from(products!.map((x) => x.toJson())),
-//   };
-// }
+  Map<String, dynamic> toJson() => {
+    "products": products == null
+        ? []
+        : List<dynamic>.from(products!.map((x) => x.toJson())),
+  };
+}
 
 @HiveType(typeId: HiveTypes.product)
 class Product {

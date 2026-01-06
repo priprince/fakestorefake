@@ -39,12 +39,14 @@ void main() {
     final MockLoginBloc bloc = MockLoginBloc();
     when(() => bloc.state).thenReturn(LoginInitialState());
     await test.pumpWidget(createWidgetUnderTest(bloc));
-    await test.enterText(find.byType(TextFormField).at(0), 'test@gmail.com');
-    await test.enterText(find.byType(TextFormField).at(1), '12');
+    await test.enterText(find.byType(TextFormField).at(0), 'john@mail.com');
+    await test.enterText(find.byType(TextFormField).at(1), 'changeme');
     await test.tap(find.text(MyString.login));
     await test.pump();
     // verify(() => bloc.add(any(that: isA<LoginButtonEvent>()))).called(1);
-    verify(() => bloc.add(LoginButtonEvent("email", "12"))).called(1);
+    verify(
+      () => bloc.add(LoginButtonEvent("john@mail.com", "changeme")),
+    ).called(1);
   });
 
   testWidgets("navigate to home", (test) async {
@@ -56,7 +58,7 @@ void main() {
     await test.pumpWidget(createWidgetUnderTest(bloc, router: router));
     controller.add(LoginSuccessState());
     await test.pump();
-    verify(() => router.goNamed(Routes.home)).called(1);
+    verify(() => router.goNamed(Routes.products)).called(1);
     await controller.close();
   });
 }

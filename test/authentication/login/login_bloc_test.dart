@@ -1,14 +1,15 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:fakestorefake/repository/data_state.dart';
 import 'package:fakestorefake/repository/loginRepository/login_repo.dart'
     show LoginRepo;
 import 'package:fakestorefake/screens/authentication/login/bloc/login_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart' show Mock;
+import 'package:mocktail/mocktail.dart' show Mock, any, when;
 
 void main() {
   late MockLoginRepo mockLoginRepo;
 
-  setUpAll(() {
+  setUp(() {
     mockLoginRepo = MockLoginRepo();
   });
   group('login bloc test', () {
@@ -40,8 +41,22 @@ void main() {
 
   blocTest<LoginBloc, LoginState>(
     'emits mock loading state then succcess state',
-    build: () => LoginBloc(mockLoginRepo),
-    act: (bloc) => bloc.add(const LoginButtonEvent('test@mail.com', '12')),
+    // build: () => LoginBloc(mockLoginRepo),
+    build: () {
+      when(() => mockLoginRepo.login(any<String>(), any<String>())).thenAnswer(
+        (add) async => Result.success(
+          "pass data",
+          message: "Login test ${add.memberName}",
+        ),
+      );
+      // when(() => mockLoginRepo.login('john@mail.com', 'changeme')).thenAnswer(
+      //   (_) async => Result.success("pass data", message: "sfsdfsdff"),
+      // );
+
+      return LoginBloc(mockLoginRepo);
+    },
+    act: (bloc) =>
+        bloc.add(const LoginButtonEvent('john@mail.com', 'changeme')),
 
     expect: () => [isA<LoginLoadingState>(), isA<LoginSuccessState>()],
   );

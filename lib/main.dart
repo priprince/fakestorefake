@@ -1,7 +1,9 @@
+import 'package:fakestorefake/dependency/get_it.dart';
 import 'package:fakestorefake/routes/router.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  await setupDependency();
   runApp(const MyApp());
 }
 
