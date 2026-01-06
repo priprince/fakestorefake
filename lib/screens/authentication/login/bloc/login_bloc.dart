@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:fakestorefake/repository/loginRepository/login_repo.dart';
-import 'package:fakestorefake/repository/loginRepository/login_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants/export_page.dart' show logger;

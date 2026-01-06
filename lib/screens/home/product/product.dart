@@ -1,5 +1,4 @@
 import 'package:fakestorefake/constants/common_widgets.dart';
-import 'package:fakestorefake/constants/extensions.dart';
 import 'package:fakestorefake/constants/loading.dart';
 import 'package:fakestorefake/constants/logs.dart' show logger;
 import 'package:fakestorefake/dependency/get_it.dart' show getIt;

@@ -1,8 +1,6 @@
-import 'package:fakestorefake/constants/logs.dart' show logger;
 import 'package:fakestorefake/graphql/dio_service.dart';
 import 'package:fakestorefake/graphql/graphql_queries.dart';
-import 'package:fakestorefake/model/product_model.dart'
-    show Product, ProductModel;
+import 'package:fakestorefake/model/product_model.dart' show Product;
 import 'package:fakestorefake/repository/data_state.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 

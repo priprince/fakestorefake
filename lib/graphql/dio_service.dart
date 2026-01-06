@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart' show Dio, Response, DioException;
-import 'package:fakestorefake/constants/logs.dart' show logger;
 import 'package:fakestorefake/dependency/get_it.dart' show url;
 import 'package:graphql_flutter/graphql_flutter.dart'
     show OperationException, GraphQLError;
