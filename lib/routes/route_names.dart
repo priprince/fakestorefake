@@ -4,6 +4,8 @@ class Routes {
   static const String home = "/home";
   static const String products = "/products";
   static const String appointments = "/appointments";
+  static const String appointmentFirst = "$appointments/appointmentFirst";
+  static const String appointmentSecond = "$appointments/appointmentSecond";
   static const String profile = "/profile";
   static const String first = "/first";
   static const String second = "/second";

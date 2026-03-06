@@ -26,7 +26,9 @@ class DioClient {
       ),
     );
 
-    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+    dio.interceptors.add(
+      LogInterceptor(requestBody: true, responseBody: false),
+    );
     return dio;
   }
 }

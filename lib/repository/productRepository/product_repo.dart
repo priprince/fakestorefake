@@ -4,15 +4,17 @@ import 'package:fakestorefake/model/product_model.dart' show Product;
 import 'package:fakestorefake/repository/data_state.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
+import '../../screens/home/product/bloc/product_bloc.dart' show ProductBundle;
+
 abstract class ProductInterface {
-  Future<Result<List<Product>>> fetchAllProducts();
+  Future<Result<ProductBundle>> fetchAllProducts();
 }
 
 class ProductRepo implements ProductInterface {
   ProductRepo(this._graphqlDioService);
   final GraphqlDioService _graphqlDioService;
   @override
-  Future<Result<List<Product>>> fetchAllProducts() async {
+  Future<Result<ProductBundle>> fetchAllProducts() async {
     try {
       final response = await _graphqlDioService.execute(() {
         return _graphqlDioService.query(GraphqlQueries.getAllProducts());
@@ -22,9 +24,16 @@ class ProductRepo implements ProductInterface {
           final data = (response.data as Map<String, dynamic>);
           // logger.i(data);
           // final productModel = ProductModel.fromJson(data);
-          final products = data['data']['products'] as List;
+          final productsRaw = data['data']['products'] as List;
+          final products = <Product>[];
+          final productMap = <String, Product>{};
+          for (final json in productsRaw) {
+            final product = Product.fromJson(json);
+            products.add(product);
+            productMap[product.id!] = product;
+          }
           return Result.success(
-            products.map((product) => Product.fromJson(product)).toList(),
+            ProductBundle(products: products, productMap: productMap),
           );
         case DataError():
         default:
